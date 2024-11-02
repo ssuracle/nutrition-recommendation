@@ -3,6 +3,7 @@ import streamlit as st
 import requests
 from google.cloud import translate_v2 as translate
 
+
 # Streamlit Secrets에서 API 키 가져오기
 openai_api_key = st.secrets["OPENAI_API_KEY"]
 google_api_credentials = st.secrets["GOOGLE_APPLICATION_CREDENTIALS"]
