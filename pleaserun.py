@@ -4,11 +4,9 @@ import requests
 from google.cloud import translate_v2 as translate
 
 
-openai_api_key = st.secrets["general"]["OPENAI_API_KEY"]
-google_credentials = st.secrets["google"]["GOOGLE_APPLICATION_CREDENTIALS"]
+google_api_credentials = st.secrets["google"]["GOOGLE_APPLICATION_CREDENTIALS"]
 
 
-# Google Cloud 인증 설정
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = google_api_credentials
 
 # Google Cloud Translate 클라이언트 생성
