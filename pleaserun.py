@@ -3,6 +3,7 @@ import streamlit as st
 from google.cloud import translate_v2 as translate
 import requests
 import json
+from gtts import gTTS
 
 # Streamlit 비밀 관리에서 API 키 로드
 openai_api_key = st.secrets["general"]["OPENAI_API_KEY"]
