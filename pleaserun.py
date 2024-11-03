@@ -39,16 +39,17 @@ def ask_chatgpt(prompt):
     content = response.json()
     return content['choices'][0]['message']['content'].strip()
 
-# Streamlit UI 구성
+# Streamlit UI 설정
 st.title("개인 맞춤형 식단 및 운동 추천 프로그램")
 
-# 사용자 입력
-weight = st.number_input("체중 (kg):", min_value=30, max_value=300, value=70)
-height = st.number_input("키 (cm):", min_value=100, max_value=250, value=170)
-age = st.number_input("나이:", min_value=1, max_value=120, value=30)
-gender = st.selectbox("성별:", ("남성", "여성"))
-activity_level = st.selectbox("활동 수준:", ("낮음", "보통", "높음"))
-food_list = st.text_area("음식 목록 (쉼표로 구분):", "떡볶이 1인분, 순대 1인분, 라면 1인분")
+# 사용자 정보 입력
+weight = st.number_input("체중 (kg):", min_value=0.0)
+height = st.number_input("키 (cm):", min_value=0.0)
+age = st.number_input("나이:", min_value=0)
+gender = st.selectbox("성별:", options=["남성", "여성"])
+activity_level = st.selectbox("활동 수준:", options=["낮음", "보통", "높음"])
+
+
 
 if st.button("추천 받기"):
     with st.spinner("추천 생성 중..."):
