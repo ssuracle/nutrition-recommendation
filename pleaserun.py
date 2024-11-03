@@ -137,7 +137,7 @@ food_list = st.text_area("음식 목록 (여러 개일 경우 쉼표로 구분):
 # 피드백이 생성되는지 확인하는 플래그
 feedback_generated = False
 
-if st.button("맞춤 피드백 받기"):
+if st.button("맞춤 피드백을 받아보시겠어요?"):
     if not food_list:
         st.warning("모든 정보를 올바르게 입력해 주세요.")
     else:
@@ -162,7 +162,8 @@ if st.button("맞춤 피드백 받기"):
             prompt = (f"사용자가 '{food_list}'을(를) 먹고 싶어합니다. "
                       f"총 섭취 칼로리는 {total_nutrition['calories']:.2f}kcal이며, "
                       f"하루 권장 칼로리는 {daily_calories:.2f}kcal입니다. "
-                      "이를 기반으로 적절한 운동과 대체 식단 옵션을 포함해 적절한 추천 피드백을 해주세요.")
+                      "당신은 사용자의 친절한 헬스 트레이너입니다. 이 정보들을 기반으로 적절한 운동과 대체 식단 옵션 (한국 식단 위주)을 포함해 친절한 추천 피드백을 해주세요."
+                      "말투는 부드럽고 친절한 말투로 해주세요.")
 
             feedback = ask_chatgpt(prompt)
 
@@ -176,6 +177,6 @@ if 'feedback' in st.session_state and (feedback_generated or st.session_state['f
     st.markdown(st.session_state['feedback'])
 
     # 피드백을 음성으로 출력하는 버튼
-    if st.button("맞춤 피드백 음성으로 듣기"):
+    if st.button("맞춤 피드백을 음성으로도 들어볼까요?"):
         tts(st.session_state['feedback'])
-        st.success("맞춤 피드백이 음성으로 변환되었습니다.")
+        st.success("맞춤 피드백을 음성으로 들려드릴게요!")
