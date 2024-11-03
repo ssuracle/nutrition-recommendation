@@ -118,13 +118,13 @@ gender = st.radio("성별을 선택하세요:", options=["남성", "여성"])
 activity_level = st.radio("활동 수준을 선택하세요:", options=["낮음", "보통", "높음"])
 
 # 음식 목록 입력
-food_list = st.text_area("음식 목록 (쉼표로 구분):", "")
+food_list = st.text_area("음식 목록 (여러 개일 경우 쉼표로 구분):", "")
 
-if st.button("추천 받기"):
+if st.button("맞춤 피드백 받기"):
     if not food_list:
         st.warning("모든 정보를 올바르게 입력해 주세요.")
     else:
-        with st.spinner("추천 생성 중..."):
+        with st.spinner("맞춤 피드백 생성 중..."):
             # BMR 및 일일 칼로리 요구량 계산
             bmr = calculate_bmr(weight, height, age, gender)
             daily_calories = calculate_daily_calories(bmr, activity_level)
@@ -142,7 +142,7 @@ if st.button("추천 받기"):
                         total_nutrition[key] += nutrition.get(key, 0)
 
             # OpenAI를 사용하여 맞춤형 피드백 요청
-            prompt = (f"사용자가 '{', '.join(foods)}'을(를) 먹고 싶어합니다. "
+            prompt = (f"사용자가 '{food_list}'을(를) 먹고 싶어합니다. "
                       f"총 섭취 칼로리는 {total_nutrition['calories']:.2f}kcal이며, "
                       f"하루 권장 칼로리는 {daily_calories:.2f}kcal입니다. "
                       "이를 기반으로 적절한 운동과 대체 식단 옵션을 포함해 적절한 추천 피드백을 해주세요.")
