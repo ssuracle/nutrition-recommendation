@@ -4,6 +4,27 @@ from google.cloud import translate_v2 as translate
 import requests
 import json
 from gtts import gTTS
+import base64
+
+# TTS 함수 정의
+def tts(response_text):
+    filename = "output.mp3"
+    tts = gTTS(text=response_text, lang="ko")
+    tts.save(filename)
+
+    # mp3 파일을 base64로 인코딩하여 Streamlit에 표시
+    with open(filename, "rb") as f:
+        data = f.read()
+        b64 = base64.b64encode(data).decode()
+        audio_html = f"""
+            <audio autoplay="True" controls>
+            <source src="data:audio/mp3;base64,{b64}" type="audio/mp3">
+            </audio>
+        """
+        st.markdown(audio_html, unsafe_allow_html=True)
+
+    # 사용이 끝난 파일 삭제
+    os.remove(filename)
 
 # Streamlit 비밀 관리에서 API 키 로드
 openai_api_key = st.secrets["general"]["OPENAI_API_KEY"]
@@ -93,8 +114,9 @@ st.title("개인 맞춤형 식단 및 운동 추천 프로그램")
 weight = st.number_input("체중 (kg):", min_value=0.0, step=0.1, value=0.0)
 height = st.number_input("키 (cm):", min_value=0.0, step=0.1, value=0.0)
 age = st.number_input("나이:", min_value=0, step=1, value=0)
-gender = st.selectbox("성별:", options=["선택하세요", "남성", "여성"])
-activity_level = st.selectbox("활동 수준:", options=["선택하세요", "낮음", "보통", "높음"])
+gender = st.radio("성별을 선택하세요:", options=["남성", "여성"])
+activity_level = st.radio("활동 수준을 선택하세요:", options=["낮음", "보통", "높음"])
+
 
 # 음식 목록 입력
 food_list = st.text_area("음식 목록 (쉼표로 구분):", "")
@@ -131,17 +153,11 @@ if st.button("추천 받기"):
             # 피드백을 세션 상태에 저장
             st.session_state['feedback'] = feedback
 
-
             # 사용자 맞춤 피드백 출력
             st.subheader("<사용자 맞춤 피드백>")
             st.markdown(feedback)
 
-
-
-            # Streamlit UI에서 버튼 추가
-            if st.button("맞춤 피드백 음성으로 듣기"):
-                if feedback:
-                    tts(feedback)
-                    st.success("맞춤 피드백이 음성으로 변환되었습니다.")
-                else:
-                    st.warning("맞춤 피드백이 없습니다.")
+# 피드백을 음성으로 출력하는 버튼
+if 'feedback' in st.session_state and st.button("맞춤 피드백 음성으로 듣기"):
+    tts(st.session_state['feedback'])
+    st.success("맞춤 피드백이 음성으로 변환되었습니다.")
