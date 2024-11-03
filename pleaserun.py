@@ -39,6 +39,22 @@ def ask_chatgpt(prompt):
     content = response.json()
     return content['choices'][0]['message']['content'].strip()
 
+# BMR 계산 함수 정의
+def calculate_bmr(weight, height, age, gender):
+    if gender == '남성':
+        return 10 * weight + 6.25 * height - 5 * age + 5
+    else:
+        return 10 * weight + 6.25 * height - 5 * age - 161
+
+# 일일 칼로리 요구량 계산 함수 정의
+def calculate_daily_calories(bmr, activity_level):
+    if activity_level == '낮음':
+        return bmr * 1.2
+    elif activity_level == '보통':
+        return bmr * 1.55
+    elif activity_level == '높음':
+        return bmr * 1.725
+
 # 음식 영양 정보 가져오기 함수 정의
 def get_nutrition_from_api(food):
     nutritionix_app_id = st.secrets["nutritionix"]["APP_ID"]
