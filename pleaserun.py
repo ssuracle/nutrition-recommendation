@@ -107,8 +107,22 @@ def get_nutrition_from_api(food):
         st.error(f"An error occurred: {err}")
         return None
 
+
+
+
 # Streamlit UI 설정
-st.title("개인 맞춤형 식단 및 운동 추천 프로그램")
+
+
+
+# GitHub에 업로드된 이미지 URL
+image_url = "https://raw.githubusercontent.com/ssuracle/nutrition-recommendation/main/eatcha.jpeg"
+
+# 이미지 삽입
+st.image(image_url, use_column_width=True)
+
+
+
+st.title("잇차 (Eat-Cha)")
 
 # 사용자 정보 입력
 weight = st.number_input("체중 (kg):", min_value=0, step=1, value=0)
