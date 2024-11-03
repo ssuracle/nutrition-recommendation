@@ -9,9 +9,9 @@ openai_api_key = st.secrets["general"]["OPENAI_API_KEY"]
 google_api_credentials = st.secrets["google"]["GOOGLE_APPLICATION_CREDENTIALS"]
 
 # Set Google API credentials
-with open("/Users/ssu_racle_/Downloads/ssuracle_github/civil-dolphin-435523-b3.json", "w") as f:
+with open("google_credentials.json", "w") as f:
     f.write(google_api_credentials)
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/Users/ssu_racle_/Downloads/ssuracle_github/civil-dolphin-435523-b3.json"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "google_credentials.json"
 
 # Initialize Google Translate Client
 translate_client = translate.Client()
