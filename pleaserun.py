@@ -130,3 +130,15 @@ if st.button("추천 받기"):
             # 사용자 맞춤 피드백 출력
             st.subheader("<사용자 맞춤 피드백>")
             st.markdown(feedback)
+
+
+
+            # Streamlit UI에서 버튼 추가
+            if st.button("맞춤 피드백 음성으로 듣기"):
+                if feedback:
+                    tts(feedback)
+                    st.success("맞춤 피드백이 음성으로 변환되었습니다.")
+                else:
+                    st.warning("맞춤 피드백이 없습니다.")
+
+
