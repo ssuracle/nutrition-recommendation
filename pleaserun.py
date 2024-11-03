@@ -43,13 +43,11 @@ def ask_chatgpt(prompt):
 st.title("개인 맞춤형 식단 및 운동 추천 프로그램")
 
 # 사용자 정보 입력
-weight = st.number_input("체중 (kg):", min_value=0.0)
-height = st.number_input("키 (cm):", min_value=0.0)
-age = st.number_input("나이:", min_value=0)
-gender = st.selectbox("성별:", options=["남성", "여성"])
-activity_level = st.selectbox("활동 수준:", options=["낮음", "보통", "높음"])
-
-
+weight = st.number_input("체중 (kg):", min_value=0.0, value=None)  # 기본값을 None으로 설정
+height = st.number_input("키 (cm):", min_value=0.0, value=None)  # 기본값을 None으로 설정
+age = st.number_input("나이:", min_value=0, value=None)  # 기본값을 None으로 설정
+gender = st.selectbox("성별:", options=["남성", "여성"])  # 기본값 없음
+activity_level = st.selectbox("활동 수준:", options=["낮음", "보통", "높음"])  # 기본값 없음
 
 if st.button("추천 받기"):
     with st.spinner("추천 생성 중..."):
