@@ -3,20 +3,17 @@ import streamlit as st
 from google.cloud import translate_v2 as translate
 import requests
 import json
+from gtts import gTTS
 import base64
-import pyttsx3  # 음성 속도 조절을 위해 pyttsx3 사용
 
-# pyttsx3 초기화 및 속도 설정
-engine = pyttsx3.init()
-engine.setProperty('rate', 150)  # 속도를 조절, 기본값은 200
-
-# TTS 함수 정의 (pyttsx3 사용)
-def tts_pyttsx3(response_text):
-    engine.save_to_file(response_text, "output.mp3")
-    engine.runAndWait()
+# TTS 함수 정의
+def tts(response_text):
+    filename = "output.mp3"
+    tts = gTTS(text=response_text, lang="ko")
+    tts.save(filename)
 
     # mp3 파일을 base64로 인코딩하여 Streamlit에 표시
-    with open("output.mp3", "rb") as f:
+    with open(filename, "rb") as f:
         data = f.read()
         b64 = base64.b64encode(data).decode()
         audio_html = f"""
@@ -27,7 +24,7 @@ def tts_pyttsx3(response_text):
         st.markdown(audio_html, unsafe_allow_html=True)
 
     # 사용이 끝난 파일 삭제
-    os.remove("output.mp3")
+    os.remove(filename)
 
 # Streamlit 비밀 관리에서 API 키 로드
 openai_api_key = st.secrets["general"]["OPENAI_API_KEY"]
@@ -114,8 +111,8 @@ def get_nutrition_from_api(food):
 st.title("개인 맞춤형 식단 및 운동 추천 프로그램")
 
 # 사용자 정보 입력
-weight = st.number_input("체중 (kg):", min_value=0.0, step=0.1, value=0.0)
-height = st.number_input("키 (cm):", min_value=0.0, step=0.1, value=0.0)
+weight = st.number_input("체중 (kg):", min_value=0, step=1, value=0)
+height = st.number_input("키 (cm):", min_value=0, step=1, value=0)
 age = st.number_input("나이:", min_value=0, step=1, value=0)
 gender = st.radio("성별을 선택하세요:", options=["남성", "여성"])
 activity_level = st.radio("활동 수준을 선택하세요:", options=["낮음", "보통", "높음"])
@@ -159,10 +156,12 @@ if st.button("추천 받기"):
             st.subheader("<사용자 맞춤 피드백>")
             st.markdown(feedback)
 
-# 피드백을 음성으로 출력하는 버튼
+# 세션 상태에 피드백이 있는 경우 출력 유지
 if 'feedback' in st.session_state:
     st.subheader("<사용자 맞춤 피드백>")
     st.markdown(st.session_state['feedback'])
+
+    # 피드백을 음성으로 출력하는 버튼
     if st.button("맞춤 피드백 음성으로 듣기"):
-        tts_pyttsx3(st.session_state['feedback'])
+        tts(st.session_state['feedback'])
         st.success("맞춤 피드백이 음성으로 변환되었습니다.")
