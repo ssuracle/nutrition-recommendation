@@ -61,6 +61,7 @@ def ask_chatgpt(prompt):
     content = response.json()
     return content['choices'][0]['message']['content'].strip()
 
+
 # BMR 계산 함수 정의
 def calculate_bmr(weight, height, age, gender):
     if gender == '남성':
