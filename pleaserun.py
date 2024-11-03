@@ -3,17 +3,20 @@ import streamlit as st
 from google.cloud import translate_v2 as translate
 import requests
 import json
-from gtts import gTTS
 import base64
+import pyttsx3  # 음성 속도 조절을 위해 pyttsx3 사용
 
-# TTS 함수 정의
-def tts(response_text):
-    filename = "output.mp3"
-    tts = gTTS(text=response_text, lang="ko")
-    tts.save(filename)
+# pyttsx3 초기화 및 속도 설정
+engine = pyttsx3.init()
+engine.setProperty('rate', 150)  # 속도를 조절, 기본값은 200
+
+# TTS 함수 정의 (pyttsx3 사용)
+def tts_pyttsx3(response_text):
+    engine.save_to_file(response_text, "output.mp3")
+    engine.runAndWait()
 
     # mp3 파일을 base64로 인코딩하여 Streamlit에 표시
-    with open(filename, "rb") as f:
+    with open("output.mp3", "rb") as f:
         data = f.read()
         b64 = base64.b64encode(data).decode()
         audio_html = f"""
@@ -24,7 +27,7 @@ def tts(response_text):
         st.markdown(audio_html, unsafe_allow_html=True)
 
     # 사용이 끝난 파일 삭제
-    os.remove(filename)
+    os.remove("output.mp3")
 
 # Streamlit 비밀 관리에서 API 키 로드
 openai_api_key = st.secrets["general"]["OPENAI_API_KEY"]
@@ -117,12 +120,11 @@ age = st.number_input("나이:", min_value=0, step=1, value=0)
 gender = st.radio("성별을 선택하세요:", options=["남성", "여성"])
 activity_level = st.radio("활동 수준을 선택하세요:", options=["낮음", "보통", "높음"])
 
-
 # 음식 목록 입력
 food_list = st.text_area("음식 목록 (쉼표로 구분):", "")
 
 if st.button("추천 받기"):
-    if gender == "선택하세요" or activity_level == "선택하세요" or not food_list:
+    if not food_list:
         st.warning("모든 정보를 올바르게 입력해 주세요.")
     else:
         with st.spinner("추천 생성 중..."):
@@ -158,6 +160,9 @@ if st.button("추천 받기"):
             st.markdown(feedback)
 
 # 피드백을 음성으로 출력하는 버튼
-if 'feedback' in st.session_state and st.button("맞춤 피드백 음성으로 듣기"):
-    tts(st.session_state['feedback'])
-    st.success("맞춤 피드백이 음성으로 변환되었습니다.")
+if 'feedback' in st.session_state:
+    st.subheader("<사용자 맞춤 피드백>")
+    st.markdown(st.session_state['feedback'])
+    if st.button("맞춤 피드백 음성으로 듣기"):
+        tts_pyttsx3(st.session_state['feedback'])
+        st.success("맞춤 피드백이 음성으로 변환되었습니다.")
