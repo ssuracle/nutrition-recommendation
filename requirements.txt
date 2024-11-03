@@ -2,3 +2,4 @@ streamlit
 google-cloud-translate
 requests
 gTTS
+pyttsx3
