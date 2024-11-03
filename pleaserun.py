@@ -49,6 +49,11 @@ age = st.number_input("나이:", min_value=0, value=None)  # 기본값을 None�
 gender = st.selectbox("성별:", options=["남성", "여성"])  # 기본값 없음
 activity_level = st.selectbox("활동 수준:", options=["낮음", "보통", "높음"])  # 기본값 없음
 
+
+# 음식 목록 입력
+food_list = st.text_area("음식 목록 (쉼표로 구분):", "")
+
+
 if st.button("추천 받기"):
     with st.spinner("추천 생성 중..."):
         # BMR 및 일일 칼로리 요구량 계산
