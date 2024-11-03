@@ -29,7 +29,7 @@ def ask_chatgpt(prompt):
     }
 
     data = {
-        "model": "gpt-3.5-turbo",
+        "model": "gpt-4o-mini-2024-07-18",
         "messages": [{"role": "user", "content": prompt}],
         "temperature": 0.7
     }
