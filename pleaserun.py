@@ -122,7 +122,7 @@ st.image(image_url, use_column_width=200)
 
 
 
-st.title("잇차 (Eat-Cha)")
+st.title("잇차 (Eat-Cha) 💪🏻")
 
 # 사용자 정보 입력
 weight = st.number_input("체중 (kg):", min_value=0, step=1, value=0)
@@ -137,11 +137,11 @@ food_list = st.text_area("음식 목록 (여러 개일 경우 쉼표로 구분):
 # 피드백이 생성되는지 확인하는 플래그
 feedback_generated = False
 
-if st.button("맞춤 피드백을 받아보시겠어요?🥳"):
+if st.button("맞춤 피드백을 받아보시겠어요? 🧐"):
     if not food_list:
         st.warning("모든 정보를 올바르게 입력해 주세요.")
     else:
-        with st.spinner("맞춤 피드백 생성 중..."):
+        with st.spinner("맞춤 피드백 생성 중... 👩🏻‍💻"):
             # BMR 및 일일 칼로리 요구량 계산
             bmr = calculate_bmr(weight, height, age, gender)
             daily_calories = calculate_daily_calories(bmr, activity_level)
@@ -173,10 +173,10 @@ if st.button("맞춤 피드백을 받아보시겠어요?🥳"):
 
 # 피드백이 세션 상태에 있거나 새로 생성되었을 경우 한 번만 출력
 if 'feedback' in st.session_state and (feedback_generated or st.session_state['feedback']):
-    st.subheader("<사용자 맞춤 피드백>")
+    st.subheader("맞춤 피드백이 생성되었습니다! 💁🏻‍♀️")
     st.markdown(st.session_state['feedback'])
 
     # 피드백을 음성으로 출력하는 버튼
-    if st.button("맞춤 피드백을 음성으로도 들어볼까요?"):
+    if st.button("맞춤 피드백을 음성으로도 들어볼까요? 🎧"):
         tts(st.session_state['feedback'])
-        st.success("맞춤 피드백을 음성으로 들려드릴게요!")
+        st.success("맞춤 피드백을 음성으로 들려드릴게요! 👌🏻")
