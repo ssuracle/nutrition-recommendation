@@ -120,6 +120,9 @@ activity_level = st.radio("활동 수준을 선택하세요:", options=["낮음"
 # 음식 목록 입력
 food_list = st.text_area("음식 목록 (여러 개일 경우 쉼표로 구분):", "")
 
+# 피드백이 생성되는지 확인하는 플래그
+feedback_generated = False
+
 if st.button("맞춤 피드백 받기"):
     if not food_list:
         st.warning("모든 정보를 올바르게 입력해 주세요.")
@@ -151,13 +154,10 @@ if st.button("맞춤 피드백 받기"):
 
             # 피드백을 세션 상태에 저장
             st.session_state['feedback'] = feedback
+            feedback_generated = True  # 피드백이 생성되었음을 표시
 
-            # 사용자 맞춤 피드백 출력
-            st.subheader("<사용자 맞춤 피드백>")
-            st.markdown(feedback)
-
-# 세션 상태에 피드백이 있는 경우 출력 유지
-if 'feedback' in st.session_state:
+# 피드백이 세션 상태에 있거나 새로 생성되었을 경우 한 번만 출력
+if 'feedback' in st.session_state and (feedback_generated or st.session_state['feedback']):
     st.subheader("<사용자 맞춤 피드백>")
     st.markdown(st.session_state['feedback'])
 
