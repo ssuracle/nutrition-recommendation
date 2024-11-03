@@ -4,16 +4,16 @@ from google.cloud import translate_v2 as translate
 import requests
 import json
 
-# Load secrets from Streamlit secrets management
+# Streamlit 비밀 관리에서 API 키 로드
 openai_api_key = st.secrets["general"]["OPENAI_API_KEY"]
 google_api_credentials = st.secrets["google"]["GOOGLE_APPLICATION_CREDENTIALS"]
 
-# Set Google API credentials
+# Google API 자격증명 설정
 with open("google_credentials.json", "w") as f:
     f.write(google_api_credentials)
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "google_credentials.json"
 
-# Initialize Google Translate Client
+# Google Translate 클라이언트 초기화
 translate_client = translate.Client()
 
 # 번역 함수 정의
@@ -27,6 +27,7 @@ def ask_chatgpt(prompt):
         "Authorization": f"Bearer {openai_api_key}",
         "Content-Type": "application/json"
     }
+
     data = {
         "model": "gpt-3.5-turbo",
         "messages": [{"role": "user", "content": prompt}],
@@ -37,21 +38,6 @@ def ask_chatgpt(prompt):
     response.raise_for_status()
     content = response.json()
     return content['choices'][0]['message']['content'].strip()
-
-# 칼로리 계산 함수
-def calculate_bmr(weight, height, age, gender):
-    if gender == 'male':
-        return 10 * weight + 6.25 * height - 5 * age + 5
-    else:
-        return 10 * weight + 6.25 * height - 5 * age - 161
-
-def calculate_daily_calories(bmr, activity_level):
-    if activity_level == 'sedentary':
-        return bmr * 1.2
-    elif activity_level == 'moderate':
-        return bmr * 1.55
-    elif activity_level == 'active':
-        return bmr * 1.725
 
 # Streamlit UI 구성
 st.title("개인 맞춤형 식단 및 운동 추천 프로그램")
