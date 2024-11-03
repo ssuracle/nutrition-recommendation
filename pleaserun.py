@@ -127,6 +127,10 @@ if st.button("추천 받기"):
 
             feedback = ask_chatgpt(prompt)
 
+            # 피드백을 세션 상태에 저장
+            st.session_state['feedback'] = feedback
+
+
             # 사용자 맞춤 피드백 출력
             st.subheader("<사용자 맞춤 피드백>")
             st.markdown(feedback)
@@ -140,5 +144,3 @@ if st.button("추천 받기"):
                     st.success("맞춤 피드백이 음성으로 변환되었습니다.")
                 else:
                     st.warning("맞춤 피드백이 없습니다.")
-
-
