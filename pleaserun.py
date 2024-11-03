@@ -4,27 +4,22 @@ from google.cloud import translate_v2 as translate
 import requests
 import json
 
-# Load secrets from Streamlit secrets management
+# Streamlit 비밀 관리에서 API 키 로드
 openai_api_key = st.secrets["general"]["OPENAI_API_KEY"]
 google_api_credentials = st.secrets["google"]["GOOGLE_APPLICATION_CREDENTIALS"]
 
-# Set Google API credentials
+# Google API 자격증명 설정
 with open("google_credentials.json", "w") as f:
     f.write(google_api_credentials)
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "google_credentials.json"
 
-# Initialize Google Translate Client
+# Google Translate 클라이언트 초기화
 translate_client = translate.Client()
 
 # 번역 함수 정의
 def translate_text(text, target_language='en'):
     result = translate_client.translate(text, target_language=target_language)
     return result['translatedText']
-
-# 예시 번역 출력
-paragraph_french = "떡볶이 1인분, 오뎅 3개"
-translated_text = translate_text(paragraph_french)
-st.write(translated_text)
 
 # OpenAI API 관련 설정
 def ask_chatgpt(prompt):
@@ -44,21 +39,35 @@ def ask_chatgpt(prompt):
     content = response.json()
     return content['choices'][0]['message']['content'].strip()
 
-# 사용자 정보 및 음식 목록 설정
-user_info = {
-    'weight': 100,  # 체중 kg
-    'height': 170,  # 키 cm
-    'age': 54,      # 나이
-    'gender': 'male',  # 성별
-    'activity_level': 'active'  # 활동 수준
-}
+# Streamlit UI 설정
+st.title("개인 맞춤형 식단 및 운동 추천 프로그램")
 
-food_list = ["떡볶이 1인분", "순대 1인분", "라면 1인분"]
+# 사용자 정보 입력
+weight = st.number_input("체중 (kg):", min_value=0.0)
+height = st.number_input("키 (cm):", min_value=0.0)
+age = st.number_input("나이:", min_value=0)
+gender = st.selectbox("성별:", options=["남성", "여성"])
+activity_level = st.selectbox("활동 수준:", options=["낮음", "보통", "높음"])
 
-# GPT에 질문할 프롬프트 생성
-prompt = f"사용자가 '{', '.join(food_list)}'을(를) 먹고 싶어합니다. "
-response = ask_chatgpt(prompt)
+# 음식 목록 입력
+food_list_input = st.text_area("음식 목록 (예: 떡볶이 1인분, 순대 1인분):")
+food_list = food_list_input.split(",") if food_list_input else []
 
-# 결과 표시
-st.write("사용자 맞춤 피드백")
-st.write(response)
+# 버튼 클릭 시 피드백 요청
+if st.button("추천 받기"):
+    # 사용자 정보 사전 생성
+    user_info = {
+        'weight': weight,
+        'height': height,
+        'age': age,
+        'gender': gender,
+        'activity_level': activity_level.lower()  # 소문자로 변환하여 일관성 유지
+    }
+
+    # GPT에 질문할 프롬프트 생성
+    prompt = f"사용자가 '{', '.join(food_list)}'을(를) 먹고 싶어합니다."
+    response = ask_chatgpt(prompt)
+
+    # 결과 표시
+    st.write("사용자 맞춤 피드백")
+    st.write(response)
