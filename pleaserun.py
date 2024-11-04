@@ -123,7 +123,7 @@ image_url = "https://github.com/ssuracle/nutrition-recommendation/blob/main/eatc
 
 
 
-st.title("NUVILAB")
+st.title("누비랩 NUVILAB")
 st.header("내 손 안의 헬스케어 시작 💪🏻")
 
 # 사용자 정보 입력
