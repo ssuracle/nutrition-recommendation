@@ -119,7 +119,7 @@ def get_nutrition_from_api(food):
 image_url = "https://github.com/ssuracle/nutrition-recommendation/blob/main/eatchabig.jpg?raw=true"
 
 # 이미지 삽입
-st.image(image_url, width=200)
+st.image(image_url, width=true)
 
 
 
