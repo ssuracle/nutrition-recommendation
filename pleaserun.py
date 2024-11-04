@@ -116,7 +116,7 @@ def get_nutrition_from_api(food):
 
 
 # GitHub에 업로드된 이미지 URL
-image_url = "https://github.com/ssuracle/nutrition-recommendation/blob/main/eatchabig.jpg?raw=true"
+image_url = "https://github.com/ssuracle/nutrition-recommendation/blob/main/eatchabig2.jpg?raw=true"
 
 # 이미지 삽입
 st.image(image_url, use_column_width=True)
