@@ -133,7 +133,8 @@ gender = st.radio("성별을 선택하세요!", options=["남성", "여성"])
 activity_level = st.radio("활동 수준 정도를 선택하세요!", options=["낮음", "보통", "높음"])
 
 # 음식 목록 입력
-food_list = st.text_area("어떤 음식을 드셨나요? 🍽️\n(여러 개인 경우 쉼표로 구분)", "")
+st.markdown("어떤 음식을 드셨나요? 🍽️\n(여러 개인 경우 쉼표로 구분)")
+food_list = st.text_area("", "")
 
 # 피드백이 생성되는지 확인하는 플래그
 feedback_generated = False
