@@ -123,7 +123,8 @@ image_url = "https://github.com/ssuracle/nutrition-recommendation/blob/main/eatc
 
 
 
-st.title("NUVILAB\n내 손 안의 헬스케어 시작 💪🏻")
+st.title("NUVILAB")
+st.title("내 손 안의 헬스케어 시작 💪🏻")
 
 # 사용자 정보 입력
 weight = st.number_input("체중을 입력하세요! (kg)", min_value=0, step=1, value=0)
