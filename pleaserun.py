@@ -126,14 +126,14 @@ st.image(image_url, use_column_width=True)
 st.title("내 손 안의 헬스케어 시작 💪🏻")
 
 # 사용자 정보 입력
-weight = st.number_input("체중을 입력하세요! (kg):", min_value=0, step=1, value=0)
-height = st.number_input("키를 입력하세요! (cm):", min_value=0, step=1, value=0)
-age = st.number_input("나이가 어떻게 되시나요?:", min_value=0, step=1, value=0)
-gender = st.radio("성별을 선택하세요!:", options=["남성", "여성"])
-activity_level = st.radio("활동 수준 정도를 선택하세요!:", options=["낮음", "보통", "높음"])
+weight = st.number_input("체중을 입력하세요! (kg)", min_value=0, step=1, value=0)
+height = st.number_input("키를 입력하세요! (cm)", min_value=0, step=1, value=0)
+age = st.number_input("나이가 어떻게 되시나요?", min_value=0, step=1, value=0)
+gender = st.radio("성별을 선택하세요!", options=["남성", "여성"])
+activity_level = st.radio("활동 수준 정도를 선택하세요!", options=["낮음", "보통", "높음"])
 
 # 음식 목록 입력
-food_list = st.text_area("어떤 음식을 드셨나요? 🍽️ (여러 개인 경우 쉼표로 구분):", "")
+food_list = st.text_area("어떤 음식을 드셨나요? 🍽️\n(여러 개인 경우 쉼표로 구분):", "")
 
 # 피드백이 생성되는지 확인하는 플래그
 feedback_generated = False
