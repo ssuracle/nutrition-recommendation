@@ -123,7 +123,7 @@ st.image(image_url, use_column_width=True)
 
 
 
-st.title("잇차 (Eat-Cha) 💪🏻")
+# st.title("잇차 (Eat-Cha) 💪🏻")
 
 # 사용자 정보 입력
 weight = st.number_input("체중 (kg):", min_value=0, step=1, value=0)
