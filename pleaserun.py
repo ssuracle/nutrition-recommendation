@@ -178,9 +178,6 @@ with col4:
 with col5:
     if st.button("80 kg"):
         weight = 80
-with col5:
-    if st.button("90 kg"):
-        weight = 90
 
 # 나이 입력 및 버튼
 st.write("나이를 선택하세요!")
