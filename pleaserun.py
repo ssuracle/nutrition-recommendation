@@ -139,65 +139,75 @@ st.header("내 손 안의 헬스케어 시작 💪🏻")
 
 # 사용자 정보 입력
 
+
 # 키 입력 및 버튼
 st.write("키를 선택하세요! (cm)")
-height = st.number_input("키 입력", min_value=140, max_value=180, step=1, value=160)  # 기본값 설정
+if 'height' not in st.session_state:
+    st.session_state['height'] = 160  # 기본값 설정
+
+height = st.number_input("키 입력", min_value=140, max_value=180, step=1, value=st.session_state['height'])  # 기본값 설정
 col1, col2, col3, col4, col5 = st.columns(5)
 with col1:
     if st.button("140 cm"):
-        height = 140
+        st.session_state['height'] = 140
 with col2:
     if st.button("150 cm"):
-        height = 150
+        st.session_state['height'] = 150
 with col3:
     if st.button("160 cm"):
-        height = 160
+        st.session_state['height'] = 160
 with col4:
     if st.button("170 cm"):
-        height = 170
+        st.session_state['height'] = 170
 with col5:
     if st.button("180 cm"):
-        height = 180
+        st.session_state['height'] = 180
 
 # 체중 입력 및 버튼
 st.write("체중을 선택하세요! (kg)")
-weight = st.number_input("체중 입력", min_value=40, max_value=90, step=1, value=70)  # 기본값 설정
+if 'weight' not in st.session_state:
+    st.session_state['weight'] = 70  # 기본값 설정
+
+weight = st.number_input("체중 입력", min_value=40, max_value=90, step=1, value=st.session_state['weight'])  # 기본값 설정
 col1, col2, col3, col4, col5 = st.columns(5)
 with col1:
     if st.button("40 kg"):
-        weight = 40
+        st.session_state['weight'] = 40
 with col2:
     if st.button("50 kg"):
-        weight = 50
+        st.session_state['weight'] = 50
 with col3:
     if st.button("60 kg"):
-        weight = 60
+        st.session_state['weight'] = 60
 with col4:
     if st.button("70 kg"):
-        weight = 70
+        st.session_state['weight'] = 70
 with col5:
     if st.button("80 kg"):
-        weight = 80
+        st.session_state['weight'] = 80
 
 # 나이 입력 및 버튼
 st.write("나이를 선택하세요!")
-age = st.number_input("나이 입력", min_value=20, max_value=60, step=1, value=30)  # 기본값 설정
+if 'age' not in st.session_state:
+    st.session_state['age'] = 30  # 기본값 설정
+
+age = st.number_input("나이 입력", min_value=20, max_value=60, step=1, value=st.session_state['age'])  # 기본값 설정
 col1, col2, col3, col4, col5 = st.columns(5)
 with col1:
     if st.button("20세"):
-        age = 20
+        st.session_state['age'] = 20
 with col2:
     if st.button("30세"):
-        age = 30
+        st.session_state['age'] = 30
 with col3:
     if st.button("40세"):
-        age = 40
+        st.session_state['age'] = 40
 with col4:
     if st.button("50세"):
-        age = 50
+        st.session_state['age'] = 50
 with col5:
     if st.button("60세"):
-        age = 60
+        st.session_state['age'] = 60
 
 
 
