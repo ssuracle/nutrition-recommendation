@@ -78,7 +78,8 @@ def calculate_daily_calories(bmr, activity_level):
     elif activity_level == '높음':
         return bmr * 1.725
 
-# 음식 영양 정보 가져오기 함수 정의
+
+#nutrition 음식목록 가져오기 함수
 def get_nutrition_from_api(food):
     nutritionix_app_id = st.secrets["nutritionix"]["APP_ID"]
     nutritionix_api_key = st.secrets["nutritionix"]["API_KEY"]
@@ -94,19 +95,27 @@ def get_nutrition_from_api(food):
     try:
         response = requests.post(api_url, headers=headers, json=data)
         response.raise_for_status()
-        nutrients = response.json()['foods'][0]
+        nutrients = response.json().get('foods', [])
+        
+        # 음식 목록이 비어있을 경우
+        if not nutrients:
+            st.error(f"{food}는 아직 잇차가 분석할 수 없어요 😢 다른 음식을 시도해보시겠어요?")
+            return None
+        
         return {
-            'calories': nutrients['nf_calories'],
-            'carbs': nutrients['nf_total_carbohydrate'],
-            'protein': nutrients['nf_protein'],
-            'fats': nutrients['nf_total_fat']
+            'calories': nutrients[0]['nf_calories'],
+            'carbs': nutrients[0]['nf_total_carbohydrate'],
+            'protein': nutrients[0]['nf_protein'],
+            'fats': nutrients[0]['nf_total_fat']
         }
+        
     except requests.exceptions.HTTPError as http_err:
-        st.error(f"HTTP error occurred: {http_err}")
+        st.error("잇차가 실수했어요! 요청을 다시 보내주시겠어요?")
         return None
     except Exception as err:
         st.error(f"An error occurred: {err}")
         return None
+
 
 
 
@@ -126,22 +135,58 @@ image_url = "https://github.com/ssuracle/nutrition-recommendation/blob/main/eatc
 st.title("누비랩 NUVILAB")
 st.header("내 손 안의 헬스케어 시작 💪🏻")
 
+
+
 # 사용자 정보 입력
-weight = st.number_input("체중을 입력하세요! (kg)", min_value=0, step=1, value=0)
-height = st.number_input("키를 입력하세요! (cm)", min_value=0, step=1, value=0)
-age = st.number_input("나이가 어떻게 되시나요?", min_value=0, step=1, value=0)
+
+# 키 버튼
+st.write("키를 선택하세요! (cm)")
+height = 0  # 초기값 설정
+
+
+height_buttons = [140, 150, 160, 170, 180]
+for h in height_buttons:
+    if st.button(f"{h} cm"):
+        height = h  # 버튼 클릭 시 값 설정
+        st.session_state['height'] = height  # 세션 상태에 저장
+
+# 체중 버튼
+st.write("체중을 선택하세요! (kg)")
+weight = 0  # 초기값 설정
+
+
+weight_buttons = [40, 50, 60, 70, 80, 90]
+for w in weight_buttons:
+    if st.button(f"{w} kg"):
+        weight = w  # 버튼 클릭 시 값 설정
+        st.session_state['weight'] = weight  # 세션 상태에 저장
+
+
+# 나이 버튼
+st.write("나이를 선택하세요!")
+age = 0  # 초기값 설정
+
+
+age_buttons = [20, 30, 40, 50, 60]
+for a in age_buttons:
+    if st.button(f"{a}세"):
+        age = a  # 버튼 클릭 시 값 설정
+        st.session_state['age'] = age  # 세션 상태에 저장
+
+
+# 성별 선택 + 활동수준 선택
 gender = st.radio("성별을 선택하세요!", options=["남성", "여성"])
 activity_level = st.radio("활동 수준 정도를 선택하세요!", options=["낮음", "보통", "높음"])
 
 # 음식 목록 입력
-food_list = st.text_area("어떤 음식을 드셨나요? 🍽️ (ex : 사과, 바나나)", "")
+food_list = st.text_area("어떤 음식을 드시고 싶으신가요? 🍽️ (ex : 사과, 바나나)", "")
 
 # 피드백이 생성되는지 확인하는 플래그
 feedback_generated = False
 
 if st.button("맞춤 피드백을 받아보시겠어요? 🧐"):
     if not food_list:
-        st.warning("모든 정보를 올바르게 입력해 주세요.")
+        st.warning("정보가 올바르게 입력되지 않았어요 😢")
     else:
         with st.spinner("맞춤 피드백 생성 중... 👩🏻‍💻"):
             # BMR 및 일일 칼로리 요구량 계산
@@ -164,8 +209,8 @@ if st.button("맞춤 피드백을 받아보시겠어요? 🧐"):
             prompt = (f"사용자가 '{food_list}'을(를) 먹고 싶어합니다. "
                       f"총 섭취 칼로리는 {total_nutrition['calories']:.2f}kcal이며, "
                       f"하루 권장 칼로리는 {daily_calories:.2f}kcal입니다. "
-                      "당신은 사용자의 친절한 헬스 트레이너입니다. 이 정보들을 기반으로 적절한 운동과 대체 식단 옵션 (한국 식단 위주)을 포함해 친절한 추천 피드백을 해주세요."
-                      "말투는 부드럽고 친절한 말투로 해주세요.")
+                      "당신은 사용자의 친절한 헬스 트레이너입니다. 이 정보들을 기반으로 적절한 운동과 대체 식단 옵션(양을 반만 먹어라, 저지방 재료로 대체해라 등)을 포함해 친절한 추천 피드백을 해주세요."
+                      "식단은 한국 음식으로 추천해주면 좋고, 말투는 부드럽고 친절한 말투로 해주세요.")
 
             feedback = ask_chatgpt(prompt)
 
