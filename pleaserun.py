@@ -144,84 +144,78 @@ st.write("키를 선택하세요! (cm)")
 if 'height' not in st.session_state:
     st.session_state['height'] = 160  # 기본값 설정
 
-height = st.number_input("", min_value=140, max_value=180, step=1, value=st.session_state['height'])  # 기본값 설정
+height = st.number_input("키 입력", min_value=140, max_value=180, step=1, value=st.session_state['height'])  # 기본값 설정
+
 col1, col2, col3, col4, col5 = st.columns(5)
 with col1:
     if st.button("140 cm"):
-        st.session_state['height'] = 140
-        height = st.session_state['height']  # 즉시 반영
+        st.session_state['height'] = 140  # 세션 상태 업데이트
 with col2:
     if st.button("150 cm"):
-        st.session_state['height'] = 150
-        height = st.session_state['height']  # 즉시 반영
+        st.session_state['height'] = 150  # 세션 상태 업데이트
 with col3:
     if st.button("160 cm"):
-        st.session_state['height'] = 160
-        height = st.session_state['height']  # 즉시 반영
+        st.session_state['height'] = 160  # 세션 상태 업데이트
 with col4:
     if st.button("170 cm"):
-        st.session_state['height'] = 170
-        height = st.session_state['height']  # 즉시 반영
+        st.session_state['height'] = 170  # 세션 상태 업데이트
 with col5:
     if st.button("180 cm"):
-        st.session_state['height'] = 180
-        height = st.session_state['height']  # 즉시 반영
+        st.session_state['height'] = 180  # 세션 상태 업데이트
 
 # 체중 입력 및 버튼
 st.write("체중을 선택하세요! (kg)")
 if 'weight' not in st.session_state:
     st.session_state['weight'] = 70  # 기본값 설정
 
-weight = st.number_input("", min_value=40, max_value=90, step=1, value=st.session_state['weight'])  # 기본값 설정
+weight = st.number_input("체중 입력", min_value=40, max_value=90, step=1, value=st.session_state['weight'])  # 기본값 설정
+
 col1, col2, col3, col4, col5 = st.columns(5)
 with col1:
     if st.button("40 kg"):
-        st.session_state['weight'] = 40
-        weight = st.session_state['weight']  # 즉시 반영
+        st.session_state['weight'] = 40  # 세션 상태 업데이트
 with col2:
     if st.button("50 kg"):
-        st.session_state['weight'] = 50
-        weight = st.session_state['weight']  # 즉시 반영
+        st.session_state['weight'] = 50  # 세션 상태 업데이트
 with col3:
     if st.button("60 kg"):
-        st.session_state['weight'] = 60
-        weight = st.session_state['weight']  # 즉시 반영
+        st.session_state['weight'] = 60  # 세션 상태 업데이트
 with col4:
     if st.button("70 kg"):
-        st.session_state['weight'] = 70
-        weight = st.session_state['weight']  # 즉시 반영
+        st.session_state['weight'] = 70  # 세션 상태 업데이트
 with col5:
     if st.button("80 kg"):
-        st.session_state['weight'] = 80
-        weight = st.session_state['weight']  # 즉시 반영
+        st.session_state['weight'] = 80  # 세션 상태 업데이트
 
 # 나이 입력 및 버튼
 st.write("나이를 선택하세요!")
 if 'age' not in st.session_state:
     st.session_state['age'] = 30  # 기본값 설정
 
-age = st.number_input("", min_value=20, max_value=60, step=1, value=st.session_state['age'])  # 기본값 설정
+age = st.number_input("나이 입력", min_value=20, max_value=60, step=1, value=st.session_state['age'])  # 기본값 설정
+
 col1, col2, col3, col4, col5 = st.columns(5)
 with col1:
     if st.button("20세"):
-        st.session_state['age'] = 20
-        age = st.session_state['age']  # 즉시 반영
+        st.session_state['age'] = 20  # 세션 상태 업데이트
 with col2:
     if st.button("30세"):
-        st.session_state['age'] = 30
-        age = st.session_state['age']  # 즉시 반영
+        st.session_state['age'] = 30  # 세션 상태 업데이트
 with col3:
     if st.button("40세"):
-        st.session_state['age'] = 40
-        age = st.session_state['age']  # 즉시 반영
+        st.session_state['age'] = 40  # 세션 상태 업데이트
 with col4:
     if st.button("50세"):
-        st.session_state['age'] = 50
-        age = st.session_state['age']  # 즉시 반영
+        st.session_state['age'] = 50  # 세션 상태 업데이트
 with col5:
     if st.button("60세"):
-        st.session_state['age'] = 60
-        age = st.session_state['age']  # 즉시 반영
+        st.session_state['age'] = 60  # 세션 상태 업데이트
+
+# 각 입력 필드에 반영
+height = st.session_state['height']
+weight = st.session_state['weight']
+age = st.session_state['age']
+
 
 
 
