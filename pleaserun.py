@@ -142,14 +142,14 @@ gender = st.radio("성별을 선택하세요!", options=["남성", "여성"])
 activity_level = st.radio("활동 수준 정도를 선택하세요!", options=["낮음", "보통", "높음"])
 
 # 음식 목록 입력
-food_list = st.text_area("어떤 음식을 드셨나요? 🍽️ (ex : 사과, 바나나)", "")
+food_list = st.text_area("오늘 하루 어떤 음식을 드시고 싶으신가요? 🍽️ (ex : 사과, 치즈버거 1개, 비빔밥 1인분)", "")
 
 # 피드백이 생성되는지 확인하는 플래그
 feedback_generated = False
 
 if st.button("맞춤 피드백을 받아보시겠어요? 🧐"):
     if not food_list:
-        st.warning("모든 정보를 올바르게 입력해 주세요.")
+        st.warning("정보가 올바르게 입력되지 않았어요 😢")
     else:
         with st.spinner("맞춤 피드백 생성 중... 👩🏻‍💻"):
             # BMR 및 일일 칼로리 요구량 계산
@@ -168,12 +168,12 @@ if st.button("맞춤 피드백을 받아보시겠어요? 🧐"):
                     for key in total_nutrition:
                         total_nutrition[key] += nutrition.get(key, 0)
 
-            # OpenAI를 사용하여 맞춤형 피드백 요청
+          # OpenAI를 사용하여 맞춤형 피드백 요청
             prompt = (f"사용자가 '{food_list}'을(를) 먹고 싶어합니다. "
                       f"총 섭취 칼로리는 {total_nutrition['calories']:.2f}kcal이며, "
                       f"하루 권장 칼로리는 {daily_calories:.2f}kcal입니다. "
-                      "당신은 사용자의 친절한 헬스 트레이너입니다. 이 정보들을 기반으로 적절한 운동과 대체 식단 옵션 (한국 식단 위주)을 포함해 친절한 추천 피드백을 해주세요."
-                      "말투는 부드럽고 친절한 말투로 해주세요.")
+                      "당신은 사용자의 친절한 헬스 트레이너입니다. 이 정보들을 기반으로 하루 적절한 운동과 대체 식단 옵션(양을 반만 먹어라, 저지방 재료로 대체해라 등)을 포함해 친절한 추천 계획 피드백을 해주세요."
+                      "식단은 한국 음식으로 추천해주면 좋고, 말투는 부드럽고 친절한 말투로 해주세요.")
 
             feedback = ask_chatgpt(prompt)
 
