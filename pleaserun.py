@@ -141,80 +141,51 @@ st.header("내 손 안의 헬스케어 시작 💪🏻")
 
 # 키 입력 및 버튼
 st.write("키를 선택하세요! (cm)")
-if 'height' not in st.session_state:
-    st.session_state['height'] = 160  # 기본값 설정
-
-height = st.number_input("키 입력", min_value=140, max_value=180, step=1, value=st.session_state['height'])  # 기본값 설정
-
+height = st.number_input("키 입력", min_value=140, max_value=180, step=1, value=160)  # 기본값 설정
 col1, col2, col3, col4, col5 = st.columns(5)
 with col1:
     if st.button("140 cm"):
-        st.session_state['height'] = 140  # 세션 상태 업데이트
-with col2:
+        height = 140
     if st.button("150 cm"):
-        st.session_state['height'] = 150  # 세션 상태 업데이트
-with col3:
+        height = 150
     if st.button("160 cm"):
-        st.session_state['height'] = 160  # 세션 상태 업데이트
-with col4:
+        height = 160
     if st.button("170 cm"):
-        st.session_state['height'] = 170  # 세션 상태 업데이트
-with col5:
+        height = 170
     if st.button("180 cm"):
-        st.session_state['height'] = 180  # 세션 상태 업데이트
+        height = 180
 
 # 체중 입력 및 버튼
 st.write("체중을 선택하세요! (kg)")
-if 'weight' not in st.session_state:
-    st.session_state['weight'] = 70  # 기본값 설정
-
-weight = st.number_input("체중 입력", min_value=40, max_value=90, step=1, value=st.session_state['weight'])  # 기본값 설정
-
+weight = st.number_input("체중 입력", min_value=40, max_value=90, step=1, value=70)  # 기본값 설정
 col1, col2, col3, col4, col5 = st.columns(5)
 with col1:
     if st.button("40 kg"):
-        st.session_state['weight'] = 40  # 세션 상태 업데이트
-with col2:
+        weight = 40
     if st.button("50 kg"):
-        st.session_state['weight'] = 50  # 세션 상태 업데이트
-with col3:
+        weight = 50
     if st.button("60 kg"):
-        st.session_state['weight'] = 60  # 세션 상태 업데이트
-with col4:
+        weight = 60
     if st.button("70 kg"):
-        st.session_state['weight'] = 70  # 세션 상태 업데이트
-with col5:
+        weight = 70
     if st.button("80 kg"):
-        st.session_state['weight'] = 80  # 세션 상태 업데이트
+        weight = 80
 
 # 나이 입력 및 버튼
 st.write("나이를 선택하세요!")
-if 'age' not in st.session_state:
-    st.session_state['age'] = 30  # 기본값 설정
-
-age = st.number_input("나이 입력", min_value=20, max_value=60, step=1, value=st.session_state['age'])  # 기본값 설정
-
+age = st.number_input("나이 입력", min_value=20, max_value=60, step=1, value=30)  # 기본값 설정
 col1, col2, col3, col4, col5 = st.columns(5)
 with col1:
     if st.button("20세"):
-        st.session_state['age'] = 20  # 세션 상태 업데이트
-with col2:
+        age = 20
     if st.button("30세"):
-        st.session_state['age'] = 30  # 세션 상태 업데이트
-with col3:
+        age = 30
     if st.button("40세"):
-        st.session_state['age'] = 40  # 세션 상태 업데이트
-with col4:
+        age = 40
     if st.button("50세"):
-        st.session_state['age'] = 50  # 세션 상태 업데이트
-with col5:
+        age = 50
     if st.button("60세"):
-        st.session_state['age'] = 60  # 세션 상태 업데이트
-
-# 각 입력 필드에 반영
-height = st.session_state['height']
-weight = st.session_state['weight']
-age = st.session_state['age']
+        age = 60
 
 
 
