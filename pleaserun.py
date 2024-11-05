@@ -142,7 +142,7 @@ gender = st.radio("성별을 선택하세요!", options=["남성", "여성"])
 activity_level = st.radio("활동 수준 정도를 선택하세요!", options=["낮음", "보통", "높음"])
 
 # 음식 목록 입력
-food_list = st.text_area("오늘 하루 어떤 음식을 드시고 싶으신가요? 🍽️ (ex : 사과, 치즈버거 1개, 비빔밥 1인분)", "")
+food_list = st.text_area("오늘 하루 어떤 음식을 드시고 싶으신가요? 🍽️ (ex :사과 1개, 치즈버거 1개, 콜라 1잔, 비빔밥 1인분)", "")
 
 # 피드백이 생성되는지 확인하는 플래그
 feedback_generated = False
