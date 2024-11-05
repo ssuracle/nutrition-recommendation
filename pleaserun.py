@@ -139,39 +139,69 @@ st.header("내 손 안의 헬스케어 시작 💪🏻")
 
 # 사용자 정보 입력
 
-# 키 버튼
+# 키 입력 및 버튼
 st.write("키를 선택하세요! (cm)")
-height = 0  # 초기값 설정
+height = st.number_input("키 입력", min_value=140, max_value=180, step=1, value=160)  # 기본값 설정
+col1, col2, col3, col4, col5 = st.columns(5)
+with col1:
+    if st.button("140 cm"):
+        height = 140
+with col2:
+    if st.button("150 cm"):
+        height = 150
+with col3:
+    if st.button("160 cm"):
+        height = 160
+with col4:
+    if st.button("170 cm"):
+        height = 170
+with col5:
+    if st.button("180 cm"):
+        height = 180
 
-
-height_buttons = [140, 150, 160, 170, 180]
-for h in height_buttons:
-    if st.button(f"{h} cm"):
-        height = h  # 버튼 클릭 시 값 설정
-        st.session_state['height'] = height  # 세션 상태에 저장
-
-# 체중 버튼
+# 체중 입력 및 버튼
 st.write("체중을 선택하세요! (kg)")
-weight = 0  # 초기값 설정
+weight = st.number_input("체중 입력", min_value=40, max_value=90, step=1, value=70)  # 기본값 설정
+col1, col2, col3, col4, col5 = st.columns(5)
+with col1:
+    if st.button("40 kg"):
+        weight = 40
+with col2:
+    if st.button("50 kg"):
+        weight = 50
+with col3:
+    if st.button("60 kg"):
+        weight = 60
+with col4:
+    if st.button("70 kg"):
+        weight = 70
+with col5:
+    if st.button("80 kg"):
+        weight = 80
+with col5:
+    if st.button("90 kg"):
+        weight = 90
 
-
-weight_buttons = [40, 50, 60, 70, 80, 90]
-for w in weight_buttons:
-    if st.button(f"{w} kg"):
-        weight = w  # 버튼 클릭 시 값 설정
-        st.session_state['weight'] = weight  # 세션 상태에 저장
-
-
-# 나이 버튼
+# 나이 입력 및 버튼
 st.write("나이를 선택하세요!")
-age = 0  # 초기값 설정
+age = st.number_input("나이 입력", min_value=20, max_value=60, step=1, value=30)  # 기본값 설정
+col1, col2, col3, col4, col5 = st.columns(5)
+with col1:
+    if st.button("20세"):
+        age = 20
+with col2:
+    if st.button("30세"):
+        age = 30
+with col3:
+    if st.button("40세"):
+        age = 40
+with col4:
+    if st.button("50세"):
+        age = 50
+with col5:
+    if st.button("60세"):
+        age = 60
 
-
-age_buttons = [20, 30, 40, 50, 60]
-for a in age_buttons:
-    if st.button(f"{a}세"):
-        age = a  # 버튼 클릭 시 값 설정
-        st.session_state['age'] = age  # 세션 상태에 저장
 
 
 # 성별 선택 + 활동수준 선택
