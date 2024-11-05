@@ -78,8 +78,7 @@ def calculate_daily_calories(bmr, activity_level):
     elif activity_level == '높음':
         return bmr * 1.725
 
-
-#nutrition 음식목록 가져오기 함수
+# 음식 영양 정보 가져오기 함수 정의
 def get_nutrition_from_api(food):
     nutritionix_app_id = st.secrets["nutritionix"]["APP_ID"]
     nutritionix_api_key = st.secrets["nutritionix"]["API_KEY"]
@@ -135,74 +134,22 @@ image_url = "https://github.com/ssuracle/nutrition-recommendation/blob/main/eatc
 st.title("누비랩 NUVILAB")
 st.header("내 손 안의 헬스케어 시작 💪🏻")
 
-
-
 # 사용자 정보 입력
-
-# 키 입력 및 버튼
-st.write("키를 선택하세요! (cm)")
-height = st.number_input("키 입력", min_value=140, max_value=180, step=1, value=160)  # 기본값 설정
-col1, col2, col3, col4, col5 = st.columns(5)
-with col1:
-    if st.button("140 cm"):
-        height = 140
-    if st.button("150 cm"):
-        height = 150
-    if st.button("160 cm"):
-        height = 160
-    if st.button("170 cm"):
-        height = 170
-    if st.button("180 cm"):
-        height = 180
-
-# 체중 입력 및 버튼
-st.write("체중을 선택하세요! (kg)")
-weight = st.number_input("체중 입력", min_value=40, max_value=90, step=1, value=70)  # 기본값 설정
-col1, col2, col3, col4, col5 = st.columns(5)
-with col1:
-    if st.button("40 kg"):
-        weight = 40
-    if st.button("50 kg"):
-        weight = 50
-    if st.button("60 kg"):
-        weight = 60
-    if st.button("70 kg"):
-        weight = 70
-    if st.button("80 kg"):
-        weight = 80
-
-# 나이 입력 및 버튼
-st.write("나이를 선택하세요!")
-age = st.number_input("나이 입력", min_value=20, max_value=60, step=1, value=30)  # 기본값 설정
-col1, col2, col3, col4, col5 = st.columns(5)
-with col1:
-    if st.button("20세"):
-        age = 20
-    if st.button("30세"):
-        age = 30
-    if st.button("40세"):
-        age = 40
-    if st.button("50세"):
-        age = 50
-    if st.button("60세"):
-        age = 60
-
-
-
-
-# 성별 선택 + 활동수준 선택
+weight = st.number_input("체중을 입력하세요! (kg)", min_value=0, step=1, value=0)
+height = st.number_input("키를 입력하세요! (cm)", min_value=0, step=1, value=0)
+age = st.number_input("나이가 어떻게 되시나요?", min_value=0, step=1, value=0)
 gender = st.radio("성별을 선택하세요!", options=["남성", "여성"])
 activity_level = st.radio("활동 수준 정도를 선택하세요!", options=["낮음", "보통", "높음"])
 
 # 음식 목록 입력
-food_list = st.text_area("어떤 음식을 드시고 싶으신가요? 🍽️ (ex : 사과, 바나나)", "")
+food_list = st.text_area("어떤 음식을 드셨나요? 🍽️ (ex : 사과, 바나나)", "")
 
 # 피드백이 생성되는지 확인하는 플래그
 feedback_generated = False
 
 if st.button("맞춤 피드백을 받아보시겠어요? 🧐"):
     if not food_list:
-        st.warning("정보가 올바르게 입력되지 않았어요 😢")
+        st.warning("모든 정보를 올바르게 입력해 주세요.")
     else:
         with st.spinner("맞춤 피드백 생성 중... 👩🏻‍💻"):
             # BMR 및 일일 칼로리 요구량 계산
@@ -225,8 +172,8 @@ if st.button("맞춤 피드백을 받아보시겠어요? 🧐"):
             prompt = (f"사용자가 '{food_list}'을(를) 먹고 싶어합니다. "
                       f"총 섭취 칼로리는 {total_nutrition['calories']:.2f}kcal이며, "
                       f"하루 권장 칼로리는 {daily_calories:.2f}kcal입니다. "
-                      "당신은 사용자의 친절한 헬스 트레이너입니다. 이 정보들을 기반으로 적절한 운동과 대체 식단 옵션(양을 반만 먹어라, 저지방 재료로 대체해라 등)을 포함해 친절한 추천 피드백을 해주세요."
-                      "식단은 한국 음식으로 추천해주면 좋고, 말투는 부드럽고 친절한 말투로 해주세요.")
+                      "당신은 사용자의 친절한 헬스 트레이너입니다. 이 정보들을 기반으로 적절한 운동과 대체 식단 옵션 (한국 식단 위주)을 포함해 친절한 추천 피드백을 해주세요."
+                      "말투는 부드럽고 친절한 말투로 해주세요.")
 
             feedback = ask_chatgpt(prompt)
 
