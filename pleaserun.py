@@ -127,11 +127,11 @@ def get_nutrition_from_api(food):
 image_url = "https://github.com/ssuracle/nutrition-recommendation/blob/main/eatchabig2.jpg?raw=true"
 
 # 이미지 삽입
-#st.image(image_url, use_column_width=True)
+st.image(image_url, use_column_width=True)
 
 
 
-st.title("누비랩 NUVILAB")
+#st.title("누비랩 NUVILAB")
 st.header("내 손 안의 헬스케어 시작 💪🏻")
 
 # 사용자 정보 입력
